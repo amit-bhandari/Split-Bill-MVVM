@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+                  android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:id="@+id/root_view"
+                  android:layout_height="wrap_content">
+
+        <EditText
+                android:id="@+id/transaction_name"
+                android:layout_width="match_parent"
+                android:inputType="textPersonName"
+                android:lines="1"
+                android:layout_margin="20dp"
+                android:layout_height="wrap_content"
+                android:hint="Enter transaction name"
+                android:gravity="center"
+                tools:ignore="HardcodedText"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:foregroundGravity="center"
+                android:text="Paid By"
+                android:layout_marginStart="20dp"
+                tools:ignore="HardcodedText"/>
+
+        <LinearLayout
+                android:id="@+id/paidByWrapper"
+                android:layout_width="match_parent"
+                android:layout_margin="20dp"
+                android:layout_height="wrap_content" android:orientation="vertical">
+
+        </LinearLayout>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginStart="20dp"
+                android:text="Paid For"
+                tools:ignore="HardcodedText"/>
+
+        <LinearLayout
+                android:id="@+id/paidForWrapper"
+                android:layout_width="match_parent"
+                android:layout_margin="20dp"
+                android:layout_height="wrap_content" android:orientation="vertical">
+
+        </LinearLayout>
+
+        <Button android:id="@+id/button_add"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_gravity="bottom"
+                android:layout_marginEnd="20dp"
+                android:text="Add transaction"
+                tools:ignore="HardcodedText"/>
+
+    </LinearLayout>
+
+</ScrollView>

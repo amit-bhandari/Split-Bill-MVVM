@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools" package="com.splitbill.amit.splitbill">
+
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+
+    <application
+            android:allowBackup="true"
+            android:name=".MyApp"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme" tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".ui.StartUpActivity"
+                  android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.MainActivity"
+        android:launchMode="singleTop">
+
+        </activity>
+
+        <activity android:name=".ui.CreateGroupActivity"
+                  android:windowSoftInputMode="adjustNothing"
+                  android:launchMode="singleTop">
+
+        </activity>
+
+        <activity android:name=".ui.TransactionAddActivity"
+                  android:launchMode="singleTop">
+
+        </activity>
+
+        <activity android:name=".ui.SettlementActivity"
+                  android:launchMode="singleTop">
+
+        </activity>
+
+    </application>
+
+</manifest>
