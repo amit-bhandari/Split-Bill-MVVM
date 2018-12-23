@@ -2,11 +2,11 @@ package com.splitbill.amit.splitbill
 
 import android.app.Application
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.splitbill.amit.splitbill.repo.AppDatabase
 
 class MyApp : Application(){
 
+    //writing with dagger 2 will be overkill
      companion object {
          lateinit var instance: Application
          lateinit var dbInstance: AppDatabase

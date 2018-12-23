@@ -1,5 +1,6 @@
 package com.splitbill.amit.splitbill.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.TextView
@@ -19,13 +20,18 @@ import java.util.*
 
 class TransactionAddActivity: AppCompatActivity() {
 
-    lateinit var model: MainViewModel
+    private lateinit var model: MainViewModel
 
+    @SuppressLint("InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transaction_add)
         model = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
+        //show 2 sections
+        //1 for people who paid
+        //2 for people who didn't have money xD
+        //@todo give checkbox as "split equally" pressing which total in "who paid" will b divided equally among all people
         model.users.observe(this, Observer {
             for(user in it){
                 val paidByView = layoutInflater.inflate(R.layout.item_amount_input,null)
@@ -39,6 +45,7 @@ class TransactionAddActivity: AppCompatActivity() {
         })
 
         button_add.setOnClickListener {
+            //some basic validity of data before adding data to db
             if(transaction_name.text.isEmpty()) {
                 transaction_name.error = "Enter name"
                 return@setOnClickListener
@@ -72,7 +79,7 @@ class TransactionAddActivity: AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            //process
+            //prepare data for transaction model and add it to db
             val paidBy = mutableListOf<UserMoneyComposite>()
             for(i in 0 until paidByWrapper.childCount){
                 val view = paidByWrapper.getChildAt(i)

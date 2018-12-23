@@ -12,14 +12,14 @@ data class User(
 @Entity
 data class Transaction(
     @PrimaryKey var transactionId: String,
-    var description: String,
+    var name: String,
     var totalAmount: Long,
     var paidBy: List<UserMoneyComposite>,
     var paidFor: List<UserMoneyComposite>
 )
 
 data class UserMoneyComposite(
-    var userId: String, var money: Long
+    var userName: String, var money: Long
 )
 
 data class Transfer(

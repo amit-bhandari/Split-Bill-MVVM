@@ -1,5 +1,6 @@
 package com.splitbill.amit.splitbill.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -18,6 +19,7 @@ class SettlementActivity: AppCompatActivity() {
     private lateinit var model : MainViewModel
     private val handler: Handler = Handler(Looper.getMainLooper())
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settlement)
@@ -32,6 +34,9 @@ class SettlementActivity: AppCompatActivity() {
 
                 handler.post {
                     json_text.text = jsonString
+
+                    //not using recycler view just for change as there is no need for changing items dynamically over here
+                    //and why write 100 lines of adapter when 4 lines does just fine!
                     for(transfer in transfers){
                         val view = layoutInflater.inflate(R.layout.item_settlement, null)
                         view.findViewById<TextView>(R.id.settlement_text).text = "${transfer.sender} owes ${transfer.receiver}"

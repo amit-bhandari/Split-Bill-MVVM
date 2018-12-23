@@ -12,6 +12,8 @@ class StartUpActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
             val model = ViewModelProviders.of(this).get(CreateGroupViewModel::class.java)
 
+            //if users found in db, launch main activity
+            //or ask user to create group
             model.users.observe(this, Observer {
                 model.users.removeObservers(this)
                 if(it.count()>1) {

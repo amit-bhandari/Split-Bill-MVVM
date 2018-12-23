@@ -3,9 +3,7 @@ package com.splitbill.amit.splitbill.ui
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -18,7 +16,8 @@ import com.splitbill.amit.splitbill.repo.Transaction
 import com.splitbill.amit.splitbill.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import androidx.recyclerview.widget.DividerItemDecoration
-
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
@@ -61,6 +60,22 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.clear -> {
+                GlobalScope.launch {
+                    model.clearDb()
+                    startActivity(Intent(this@MainActivity, StartUpActivity::class.java))
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     inner class TransactionAdapter: RecyclerView.Adapter<TransactionAdapter.MyViewHolder>(){
         private var transactions: List<Transaction> = listOf()
@@ -74,13 +89,13 @@ class MainActivity : AppCompatActivity() {
 
         @SuppressLint("SetTextI18n")
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-            holder.name.text = transactions[position].description
+            holder.name.text = transactions[position].name
             holder.number.text = transactions[position].totalAmount.toString()
             holder.wrapper.removeAllViews()
             for(i in 0 until transactions[position].paidBy.count()){
                 if(transactions[position].paidBy[i].money <= 0) continue
                 val view = layoutInflater.inflate(R.layout.item_settlement_in_main, null)
-                view.findViewById<TextView>(R.id.paid_by_name).text = "${transactions[position].paidBy[i].userId} paid "
+                view.findViewById<TextView>(R.id.paid_by_name).text = "${transactions[position].paidBy[i].userName} paid "
                 view.findViewById<TextView>(R.id.amount_text).text = (transactions[position].paidBy[i].money).toString()
                 holder.wrapper.addView(view)
             }

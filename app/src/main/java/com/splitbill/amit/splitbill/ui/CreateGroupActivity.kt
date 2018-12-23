@@ -66,6 +66,7 @@ class CreateGroupActivity: AppCompatActivity() {
     }
 
     private fun createAndAddUser(data: Intent?) {
+        //stack overflow copy paste to get contact name and mobile number from picked contact
         val contactData = data?.data
         val c = contentResolver.query(contactData!!, null, null, null, null)
         var name = ""
@@ -85,6 +86,8 @@ class CreateGroupActivity: AppCompatActivity() {
             name = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
         }
         c.close()
+
+        //validate user name maybe
         model.addUser(User(number, name))
     }
 

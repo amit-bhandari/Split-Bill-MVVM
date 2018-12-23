@@ -6,15 +6,6 @@ import androidx.room.*
 @Dao
 interface DbDao {
 
-    @Query("DELETE FROM user")
-    fun nukeUsers()
-
-    @Query("DELETE FROM `transaction`")
-    fun nukeTransaction()
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun addUsers(users: List<User>)
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun addUser(user: User)
 
@@ -27,4 +18,9 @@ interface DbDao {
     @Query("SELECT * FROM `transaction`")
     fun getTransactions(): LiveData<List<Transaction>>
 
+    @Query("DELETE FROM user")
+    fun nukeUsers()
+
+    @Query("DELETE FROM `transaction`")
+    fun nukeTransaction()
 }
