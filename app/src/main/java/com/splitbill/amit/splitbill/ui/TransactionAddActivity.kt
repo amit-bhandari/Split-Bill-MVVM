@@ -31,7 +31,6 @@ class TransactionAddActivity: AppCompatActivity() {
         //show 2 sections
         //1 for people who paid
         //2 for people who didn't have money xD
-        //@todo give checkbox as "split equally" pressing which total in "who paid" will b divided equally among all people
         model.users.observe(this, Observer { users ->
             val categories = ArrayList<String>()
             for(user in users){
@@ -85,6 +84,7 @@ class TransactionAddActivity: AppCompatActivity() {
 
             }
 
+            //I think this handler is ugliest of all in codebase
             button_add.setOnClickListener {
                 //some basic validity of data before adding data to db
                 if(transaction_name.text.isEmpty()) {
@@ -137,8 +137,10 @@ class TransactionAddActivity: AppCompatActivity() {
 
                     paidBy.add(UserMoneyComposite(users[i].name,amount))
                 }
+
                 val paidFor = mutableListOf<UserMoneyComposite>()
                 if(item=="Split Unequally") {
+                    //validate if paid by total matches paid for
                     for (i in 0 until users.count()) {
                         val view = paidForWrapper.getChildAt(i)
                         val amountString = view.findViewById<TextView>(R.id.amount).text.toString()
@@ -148,12 +150,14 @@ class TransactionAddActivity: AppCompatActivity() {
                         paidFor.add(UserMoneyComposite(view.findViewById<TextView>(R.id.name).text.toString(), amount))
                     }
                 }else{
+                    //equally divide among all
                     val divided = paidByTotal/users.count()
                     for (user in users) {
                         paidFor.add(UserMoneyComposite(user.name, divided))
                     }
                 }
 
+                //add transaction
                 GlobalScope.launch {
                     model.addTransaction(Transaction(UUID.randomUUID().toString(),transaction_name.text.toString(),paidByTotal, paidBy, paidFor))
                     finish()
