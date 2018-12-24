@@ -16,6 +16,7 @@ import com.splitbill.amit.splitbill.repo.Transaction
 import com.splitbill.amit.splitbill.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.splitbill.amit.splitbill.MyApp
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -44,11 +45,11 @@ class MainActivity : AppCompatActivity() {
 
         rv.adapter = adapter
         rv.layoutManager = LinearLayoutManager(this)
-        val dividerItemDecoration = DividerItemDecoration(
+        /*val dividerItemDecoration = DividerItemDecoration(
             rv.context,
             (rv.layoutManager as LinearLayoutManager).orientation
         )
-        rv.addItemDecoration(dividerItemDecoration)
+        rv.addItemDecoration(dividerItemDecoration)*/
 
         fab.setOnClickListener {
             startActivity(Intent(this, TransactionAddActivity::class.java))
@@ -58,6 +59,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, SettlementActivity::class.java))
         }
 
+        title = MyApp.pref.getString("group_name", "Awesome Group")
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -95,8 +97,8 @@ class MainActivity : AppCompatActivity() {
             for(i in 0 until transactions[position].paidBy.count()){
                 if(transactions[position].paidBy[i].money <= 0) continue
                 val view = layoutInflater.inflate(R.layout.item_settlement_in_main, null)
-                view.findViewById<TextView>(R.id.paid_by_name).text = "${transactions[position].paidBy[i].userName} paid "
-                view.findViewById<TextView>(R.id.amount_text).text = (transactions[position].paidBy[i].money).toString()
+                view.findViewById<TextView>(R.id.paid_by_name).text =
+                        "${transactions[position].paidBy[i].userName} paid ${transactions[position].paidBy[i].money}"
                 holder.wrapper.addView(view)
             }
         }

@@ -1,5 +1,6 @@
 package com.splitbill.amit.splitbill.ui
 
+import android.Manifest
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -21,11 +22,26 @@ import com.splitbill.amit.splitbill.repo.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import android.Manifest.permission
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.Manifest.permission.READ_PHONE_STATE
+import android.content.Context
+import android.content.pm.PackageManager
+import androidx.core.app.ActivityCompat
+import android.os.Build
+import android.widget.Toast
+import androidx.annotation.NonNull
+import com.splitbill.amit.splitbill.MyApp
+
 
 class CreateGroupActivity: AppCompatActivity() {
 
     private lateinit var model: CreateGroupViewModel
     private val PICK_CONTACT = 1
+    private val MY_PERMISSIONS_REQUEST = 0
+    private val PERMISSIONS =
+        arrayOf<String>(Manifest.permission.READ_CONTACTS)
+
     private val adapter = MemberAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,11 +55,19 @@ class CreateGroupActivity: AppCompatActivity() {
         })
 
         button_add.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
-            startActivityForResult(intent, PICK_CONTACT)
+            if (!hasPermissions(this, PERMISSIONS)) {
+                requestPermission()
+            } else {
+                val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
+                startActivityForResult(intent, PICK_CONTACT)
+            }
         }
 
         button_create.setOnClickListener {
+            var groupName = group_name.text.toString()
+            if(groupName.isEmpty()) groupName = "Awesome Group"
+            MyApp.pref.edit().putString("group_name",groupName).apply()
+
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
@@ -60,6 +84,29 @@ class CreateGroupActivity: AppCompatActivity() {
             PICK_CONTACT -> if (resultCode == Activity.RESULT_OK) {
                 GlobalScope.launch(Dispatchers.IO){
                     createAndAddUser(data)
+                }
+            }
+        }
+    }
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>, grantResults: IntArray
+    ) {
+        when (requestCode) {
+            MY_PERMISSIONS_REQUEST -> {
+                if (grantResults.isEmpty()) {
+                    return
+                }
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.isNotEmpty()
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                ) {
+                    val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
+                    startActivityForResult(intent, PICK_CONTACT)
+                } else {
+                    Toast.makeText(this, "Please enable contacts permission from settings to continue", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -89,6 +136,28 @@ class CreateGroupActivity: AppCompatActivity() {
 
         //validate user name maybe
         model.addUser(User(number, name))
+    }
+
+    private fun requestPermission() {
+        // Here, thisActivity is the current activity
+
+        ActivityCompat.requestPermissions(
+            this,
+            PERMISSIONS,
+            MY_PERMISSIONS_REQUEST
+        )
+
+    }
+
+    private fun hasPermissions(context: Context?, permissions: Array<String>): Boolean {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null) {
+            for (permission in permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false
+                }
+            }
+        }
+        return true
     }
 
     inner class MemberAdapter: RecyclerView.Adapter<MemberAdapter.MyViewHolder>(){

@@ -10,6 +10,8 @@
             android:layout_margin="20dp"
             android:layout_alignParentTop="true"
             android:id="@+id/button_settle_up"
+            style="@style/MyButton"
+            android:background="@drawable/button_drawable"
             android:text="Settle Up" tools:ignore="HardcodedText"/>
 
     <TextView  android:id="@+id/no_data"

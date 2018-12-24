@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -33,6 +34,12 @@ class SettlementActivity: AppCompatActivity() {
                 val jsonString = model.generateSettlementJson().toString(4)
 
                 handler.post {
+                    if(transfers.isEmpty()){
+                        settled.visibility = View.VISIBLE
+                        json_text.visibility = View.GONE
+                        return@post
+                    }
+
                     json_text.text = jsonString
 
                     //not using recycler view just for change as there is no need for changing items dynamically over here

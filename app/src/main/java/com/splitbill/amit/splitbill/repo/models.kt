@@ -13,17 +13,17 @@ data class User(
 data class Transaction(
     @PrimaryKey var transactionId: String,
     var name: String,
-    var totalAmount: Long,
+    var totalAmount: Float,
     var paidBy: List<UserMoneyComposite>,
     var paidFor: List<UserMoneyComposite>
 )
 
 data class UserMoneyComposite(
-    var userName: String, var money: Long
+    var userName: String, var money: Float
 )
 
 data class Transfer(
     val sender: String,
     val receiver: String,
-    val amount: Long
+    val amount: Float
 )

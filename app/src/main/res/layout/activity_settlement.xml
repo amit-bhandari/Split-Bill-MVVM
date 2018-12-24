@@ -9,6 +9,7 @@
         <LinearLayout
                 android:id="@+id/settlementWrapper"
                 android:orientation="vertical"
+                android:layout_margin="10dp"
                 android:layout_width="match_parent" android:layout_height="wrap_content">
 
         </LinearLayout>
@@ -19,6 +20,17 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:id="@+id/json_text"/>
+
+        <TextView android:layout_marginTop="30dp"
+                  android:layout_marginStart="10dp"
+                  android:layout_below="@+id/settlementWrapper"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:visibility="gone"
+                  android:layout_centerInParent="true"
+                  style="@style/BlackTextColor"
+                  android:text="Group is settled"
+                  android:id="@+id/settled"/>
 
     </RelativeLayout>
 

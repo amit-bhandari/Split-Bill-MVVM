@@ -99,13 +99,6 @@ fun Iterable<Iterable<UserMoneyComposite>>.merge()
         finalList += this.elementAt(i)
     }
 
-    //check if total turns out to be 0, if not throw the exception
-    var total = 0L
-    for(composite in finalList){
-        total+=composite.money
-    }
-    if(total!=0L) throw IllegalStateException("Something bad happened, settlement cannot be created")
-
     return finalList
 }
 
@@ -116,15 +109,15 @@ fun Map<String, MutableList<UserMoneyComposite>>.calculateTransfers()
         val sender = this["owed"]?.get(0)
         val receiver = this["paid"]?.get(0)
 
-        val canGive = sender?.money?.absoluteValue ?: 0
-        val demand = receiver?.money ?: 0
+        val canGive = sender?.money?.absoluteValue ?: 0f
+        val demand = receiver?.money ?: 0f
         val possibleToGive = Math.min(canGive, demand)
 
         sender?.money = canGive - possibleToGive
-        if (sender?.money == 0L) this["owed"]?.remove(sender)
+        if (sender?.money == 0f) this["owed"]?.remove(sender)
 
         receiver?.money = demand - possibleToGive
-        if (receiver?.money == 0L) this["paid"]?.remove(receiver)
+        if (receiver?.money == 0f) this["paid"]?.remove(receiver)
 
         transfers.add(Transfer(sender?.userName ?: "", receiver?.userName ?: "", possibleToGive))
     }
@@ -139,15 +132,15 @@ fun Map<String, MutableList<UserMoneyComposite>>.getJsonObject()
         val sender = this["owed"]?.get(0)
         val receiver = this["paid"]?.get(0)
 
-        val canGive = sender?.money?.absoluteValue ?: 0
-        val demand = receiver?.money ?: 0
+        val canGive = sender?.money?.absoluteValue ?: 0f
+        val demand = receiver?.money ?: 0f
         val possibleToGive = Math.min(canGive, demand)
 
         sender?.money = canGive - possibleToGive
-        if (sender?.money == 0L) this["owed"]?.remove(sender)
+        if (sender?.money == 0f) this["owed"]?.remove(sender)
 
         receiver?.money = demand - possibleToGive
-        if (receiver?.money == 0L) this["paid"]?.remove(receiver)
+        if (receiver?.money == 0f) this["paid"]?.remove(receiver)
 
         //transfers.add(Transfer(sender?.userName ?: "", receiver?.userName ?: "", possibleToGive))
 

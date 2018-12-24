@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#1a8e8f</color>
-    <color name="colorPrimaryDark">#147273</color>
+    <color name="colorPrimary">#4caf50</color>
+    <color name="colorPrimaryDark">#357a38</color>
     <color name="colorPrimaryLight">#DCEDC8</color>
     <color name="colorAccent">#000000</color>
     <color name="textColorPrimary">#212121</color>
     <color name="textColorSecondary">#757575</color>
     <color name="dividerColor">#BDBDBD</color>
 
-    <color name="gradient1">#22c1c3</color>
+    <color name="gradient1">#4caf50</color>
     <color name="gradient2">#105a5b</color>
-    <color name="gradient3">#0b3d3e</color>
+    <color name="gradient3">#8fd3f4</color>
 </resources>

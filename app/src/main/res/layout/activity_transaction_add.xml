@@ -15,18 +15,35 @@
                 android:inputType="textPersonName"
                 android:lines="1"
                 android:layout_margin="20dp"
+                style="@style/BlackTextColor"
                 android:layout_height="wrap_content"
                 android:hint="Enter transaction name"
                 android:gravity="center"
                 tools:ignore="HardcodedText"/>
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:foregroundGravity="center"
-                android:text="Paid By"
-                android:layout_marginStart="20dp"
-                tools:ignore="HardcodedText"/>
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:foregroundGravity="center"
+                    android:text="Paid By"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    style="@style/BlackTextColor"
+                    android:textStyle="bold"
+                    android:layout_marginStart="20dp"
+                    tools:ignore="HardcodedText"/>
+
+            <Spinner
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/paid_by_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+
 
         <LinearLayout
                 android:id="@+id/paidByWrapper"
@@ -36,13 +53,28 @@
 
         </LinearLayout>
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginStart="20dp"
-                android:text="Paid For"
-                tools:ignore="HardcodedText"/>
+
+
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    style="@style/BlackTextColor"
+                    android:textStyle="bold"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="20dp"
+                    android:text="Paid For"
+                    tools:ignore="HardcodedText"/>
+
+            <Spinner
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/paid_for_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+        </RelativeLayout>
 
         <LinearLayout
                 android:id="@+id/paidForWrapper"
@@ -57,7 +89,9 @@
                 android:layout_marginStart="20dp"
                 android:layout_gravity="bottom"
                 android:layout_marginEnd="20dp"
-                android:text="Add transaction"
+                android:background="@drawable/button_drawable"
+                style="@style/MyButton"
+                android:text="Add Transaction"
                 tools:ignore="HardcodedText"/>
 
     </LinearLayout>
